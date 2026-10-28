@@ -1,0 +1,10 @@
+shots/
+*.png.bak
+*.wav
+*.f32
+*_ev.json
+*_x.json
+*_meta.json
+node_modules/
+.flypod*
+.DS_Store

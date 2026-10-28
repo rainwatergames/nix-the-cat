@@ -1,0 +1,119 @@
+<!doctype html>
+<!-- NIX THE CAT v0.6 — A Rainwater Games production. © 2026 Rainwater Games (Jeff Rainwater). All rights reserved. -->
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="author" content="Rainwater Games - Jeff Rainwater">
+<meta name="description" content="Nix the Cat — a hip-hop rhythm game starring Nix, the coolest street cat. By Rainwater Games.">
+<meta name="theme-color" content="#14101f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png?v=0.6"><link rel="apple-touch-icon" href="icon-192.png?v=0.6">
+<title>Nix the Cat — Rainwater Games</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#0d0a18;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;font-family:system-ui,-apple-system,Roboto,"Segoe UI",sans-serif;color:#fff}
+canvas{position:fixed;left:0;top:0;display:block;touch-action:none}
+.scr{position:fixed;inset:0;z-index:5;pointer-events:none;display:flex;flex-direction:column;align-items:center}
+.hide{display:none!important}
+.scr button,.scr input,.scr label,.card,.panel,.witem{pointer-events:auto}
+button{font:900 15px/1 system-ui,Roboto,sans-serif;letter-spacing:.04em;color:#fff;background:#ffffff1c;border:2px solid #ffffff3a;border-radius:16px;padding:12px 16px;cursor:pointer}
+button:active{transform:scale(.96)}
+button.big{background:linear-gradient(90deg,#7dff6b,#33e1ff);color:#0b0f1e;border:0;font-size:20px;padding:16px 30px;box-shadow:0 5px 0 #0b5a6a,0 10px 30px #33e1ff55;border-radius:20px}
+.top{position:absolute;top:max(10px,env(safe-area-inset-top));left:12px;right:12px;display:flex;gap:8px;align-items:center;font:800 11px system-ui;letter-spacing:.2em}
+.badge{background:#ff3d6e;color:#fff;padding:3px 7px;border-radius:6px;letter-spacing:.1em}
+.ver{opacity:.85;margin-left:auto;letter-spacing:.05em}
+.logo{margin-top:calc(40px + env(safe-area-inset-top));text-align:center;line-height:.85;transform:rotate(-4deg)}
+.l1{font:900 clamp(60px,20vw,104px)/.9 "Arial Black",Impact,system-ui;color:#fff;letter-spacing:.05em;text-shadow:0 5px 0 #33e1ff,0 10px 0 #ff3fd6,0 0 30px #ff3fd6aa}
+.l2{font:900 clamp(20px,6.5vw,32px) "Arial Black",Impact,system-ui;color:#7dff6b;letter-spacing:.3em;margin-top:12px;text-shadow:0 3px 0 #0b3a14}
+.menu{position:absolute;bottom:calc(100px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px;align-items:center}
+.row{display:flex;gap:8px;justify-content:center}
+.foot{position:absolute;bottom:calc(6px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font:600 10px system-ui;opacity:.75;padding:0 8px;pointer-events:none}
+.hdr{width:100%;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 12px 0}
+.hdr h2{margin:0;font:900 20px "Arial Black",system-ui;letter-spacing:.06em;text-shadow:0 2px 0 #000}
+.back{width:44px;height:44px;padding:0;font-size:24px;border-radius:50%}
+.lower{position:absolute;top:36%;bottom:calc(24px + env(safe-area-inset-bottom));left:10px;right:10px;display:flex;flex-direction:column;gap:8px;max-width:520px;margin:0 auto}
+.diffs{display:flex;gap:6px}.diffs button{flex:1;padding:11px 0}.diffs button.on{background:#fff;color:#111}
+.card{background:#0b0818d8;border:2px solid #ffffff2a;border-radius:16px;padding:9px 11px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.card.on{border-color:#7dff6b;box-shadow:0 0 0 2px #7dff6b44,0 0 22px #7dff6b33}
+.ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.nm{font:900 16px system-ui}.gn{font:600 12px system-ui;opacity:.75;margin-top:3px}
+.bs{margin-left:auto;display:flex;gap:4px;flex:none}.gb{width:25px;height:25px;border-radius:7px;background:#ffffff14;font:900 12px/25px system-ui;text-align:center}
+.gb small{display:block;font-size:7px;line-height:1;margin-top:-4px;opacity:.6}
+.info{font:600 12px system-ui;opacity:.85;text-align:center;min-height:14px}
+.go{margin-top:auto;align-self:center}
+.panel{margin-top:auto;margin-bottom:calc(26px + env(safe-area-inset-bottom));width:calc(100% - 20px);max-width:480px;background:#0b0818ec;border:2px solid #ffffff2a;border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:9px}
+.panel h2{margin:0;text-align:center;font:900 20px "Arial Black",system-ui;letter-spacing:.06em}
+.panel label{display:flex;flex-direction:column;gap:4px;font:700 13px system-ui}
+.panel label.chk{flex-direction:row;align-items:center;gap:10px}
+input[type=range]{width:100%;accent-color:#7dff6b;height:28px}
+input[type=checkbox]{width:24px;height:24px;accent-color:#7dff6b}
+.lab{font:700 13px system-ui;display:flex;justify-content:space-between}
+.hint{margin:0;font:500 11px/1.35 system-ui;opacity:.75}
+.tap{font-size:44px;width:110px;height:110px;border-radius:50%;align-self:center;background:#ff3fd6;border:4px solid #fff}
+#bPause{position:fixed;top:max(8px,env(safe-area-inset-top));left:8px;width:42px;height:42px;padding:0;border-radius:50%;font-size:15px;background:#0008}
+#rGrade{font:900 92px/1 "Arial Black",Impact,system-ui;text-align:center;text-shadow:0 5px 0 #000,0 0 30px currentColor}
+.rs{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;font:700 13px system-ui}.rs b{float:right}
+#rScore{text-align:center;font:900 26px system-ui}#rNew{text-align:center;font:900 14px system-ui;color:#ffd23a;min-height:16px}
+.wgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.witem{border:2px solid #ffffff2a;border-radius:12px;padding:6px 2px;text-align:center;font:700 10px system-ui;background:#ffffff0c;cursor:pointer}
+.witem.on{border-color:#7dff6b;background:#7dff6b22}.witem.lock{opacity:.45}
+.sw{width:30px;height:30px;border-radius:50%;margin:0 auto 4px;border:2px solid #fff6}
+.banner{position:fixed;left:0;right:0;top:40%;text-align:center;font:900 30px "Arial Black",system-ui;z-index:9;pointer-events:none}
+.htag{display:inline-block;font:900 10px system-ui;background:linear-gradient(90deg,#ff3d3d,#ff9a1f);color:#fff;border-radius:8px;padding:2px 6px;vertical-align:2px;letter-spacing:.04em}
+.card{padding:7px 10px}.card.hard{border-color:#ff7a3a66}.card.hard.on{border-color:#7dff6b}
+.hsT{text-align:center;font:900 14px system-ui;color:#ffe66d;margin-bottom:4px}
+.hsW{max-height:150px;overflow-y:auto;border-radius:10px;background:#ffffff08}
+table.hs{width:100%;border-collapse:collapse;font:700 11px system-ui}table.hs th{font:900 9px system-ui;opacity:.6;text-align:left;padding:3px 3px;position:sticky;top:0;background:#1a1530}
+table.hs td{padding:3px 3px;border-top:1px solid #ffffff12;white-space:nowrap}table.hs td:nth-child(3){font-weight:900}
+table.hs tr.me td{background:#ffe66d33;color:#ffe66d}.hsE{text-align:center;font:700 13px system-ui;opacity:.7;padding:14px}
+#rName{flex:1;min-width:0;max-width:170px;font:900 20px "Arial Black",system-ui;letter-spacing:.12em;text-transform:uppercase;text-align:center;background:#fff;color:#111;border:0;border-radius:12px;padding:8px}
+.hsS{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.hsS button{font-size:22px;padding:8px 0;position:relative}.hsS button.on{background:#fff;color:#111}.hsS i{position:absolute;right:2px;top:0;font-size:11px;font-style:normal}
+#results #rGrade{font-size:68px}
+#title .menu{width:calc(100% - 24px);max-width:440px;margin-left:auto;margin-right:auto}#title .menu .row button{flex:1;min-width:0;padding-left:4px;padding-right:4px}
+#songs{scroll-behavior:smooth;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#ffe66d55 transparent}#songs.more{-webkit-mask-image:linear-gradient(#000 82%,#0000);mask-image:linear-gradient(#000 82%,#0000)}#songs::-webkit-scrollbar{width:4px}#songs::-webkit-scrollbar-thumb{background:#ffe66d66;border-radius:4px}#sMore{text-align:center;font:800 12px system-ui;color:#ffe66d;margin-top:-2px;animation:mb 1.2s ease-in-out infinite}#sMore.hide{display:none}@keyframes mb{50%{transform:translateY(3px);opacity:.6}}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="title" class="scr">
+ <div class="top"><span>RAINWATER GAMES</span><span class="badge">ALPHA</span><span class="ver">v0.6</span></div>
+ <div class="logo"><div class="l1">NIX</div><div class="l2">THE CAT</div></div>
+ <div class="menu"><button id="bPlay" class="big">▶ PLAY</button><div class="row"><button id="bWard">🧢 WARDROBE</button><button id="bHS">🏆 SCORES</button><button id="bSet">⚙ SETTINGS</button></div></div>
+ <div class="foot">© 2026 Rainwater Games (Jeff Rainwater). All rights reserved.</div>
+</div>
+<div id="select" class="scr hide">
+ <div class="hdr"><button class="back" data-to="title">‹</button><h2>PICK A TRACK</h2><button id="sHS" class="back" style="margin-left:auto;width:auto;padding:0 12px;font-size:15px" aria-label="High scores">🏆</button></div>
+ <div class="lower"><div class="diffs"><button data-d="0">EASY</button><button data-d="1">NORMAL</button><button data-d="2">HARD</button></div>
+ <div id="songs" style="display:flex;flex-direction:column;gap:6px;overflow-y:auto;min-height:0;flex:0 1 auto;padding:2px"></div><div id="sMore" class="hide">▼ more songs — swipe up ▼</div><div class="info" id="sInfo"></div>
+ <button id="bGo" class="big go">▶ LET'S GO</button><button id="bTut" class="big" style="margin-top:8px;font-size:15px;padding:10px">🎓 How to play</button></div>
+ <div class="foot">© 2026 Rainwater Games (Jeff Rainwater). All rights reserved.</div>
+</div>
+<div id="settings" class="scr hide"><div class="panel"><h2>SETTINGS</h2>
+ <label>Music volume<input type="range" id="sMv" min="0" max="100"></label>
+ <label>Sound FX volume<input type="range" id="sSv" min="0" max="100"></label>
+ <div class="lab"><span>Audio offset</span><b id="sOffV">0 ms</b></div>
+ <div class="row"><button data-o="-10">−10</button><button data-o="-1">−1</button><button data-o="1">+1</button><button data-o="10">+10</button></div>
+ <p class="hint">Tapping right on the beat but seeing LATE? Raise it. Seeing EARLY? Lower it. Bluetooth headphones often need +150 to +250. Or let Calibrate figure it out.</p>
+ <button id="sCal">🎯 CALIBRATE (tap to the beat)</button>
+ <div id="calBox" class="hide" style="display:flex;flex-direction:column;gap:8px"><p class="hint" id="calMsg" style="text-align:center;font-size:13px">Tap the paw on every click</p><button id="calTap" class="tap">🐾</button></div>
+ <label class="chk"><input type="checkbox" id="sRf"> Reduce flashing</label>
+ <button class="big" data-to="title">DONE</button></div></div>
+<div id="wardrobe" class="scr hide"><div class="panel"><h2>NIX'S WARDROBE</h2>
+ <div class="lab"><span>CAPS</span></div><div class="wgrid" id="wCaps"></div>
+ <div class="lab"><span>HOODIES</span></div><div class="wgrid" id="wHoods"></div>
+ <div class="lab"><span>EXTRAS</span></div><div class="wgrid" id="wExtra"></div>
+ <p class="hint" id="wHint" style="text-align:center">Earn grades to unlock new drip for Nix!</p>
+ <button class="big" data-to="title">DONE</button></div></div>
+<div id="results" class="scr hide"><div class="panel" style="margin-bottom:calc(24px + env(safe-area-inset-bottom))">
+ <div id="rGrade">S</div><div id="rSong" class="info"></div><div id="rScore"></div><div class="rs" id="rStats"></div><div id="rNew"></div><div id="rHS"></div>
+ <div class="row"><button id="rRetry">↻ RETRY</button><button id="rSongs" class="big">SONGS ▸</button></div></div>
+ <div class="foot">© 2026 Rainwater Games (Jeff Rainwater). All rights reserved.</div></div>
+<div id="scores" class="scr hide"><div class="panel" style="margin-top:auto">
+ <div class="hdr" style="padding:0"><button class="back" id="hsBack">‹</button><h2>🏆 HIGH SCORES</h2></div>
+ <div class="hsS" id="hsSongs"></div><div class="diffs" id="hsDiffs"><button data-d="0">EASY</button><button data-d="1">NORMAL</button><button data-d="2">HARD</button></div>
+ <div class="info" id="hsName" style="font-weight:900;font-size:14px"></div><div class="hsW" id="hsList" style="max-height:none"></div>
+ <p class="hint" style="text-align:center">Top 10 per song and difficulty, saved on this device.</p></div>
+ <div class="foot">© 2026 Rainwater Games (Jeff Rainwater). All rights reserved.</div></div>
+<div id="hud" class="scr hide"><button id="bPause" aria-label="Pause">❚❚</button></div>
+<div id="pause" class="scr hide" style="justify-content:center;background:#0008"><div class="panel" style="margin:auto"><h2>PAUSED</h2>
+ <button id="pRes" class="big">▶ RESUME</button><button id="pRetry">↻ RESTART</button><button id="pQuit">✕ QUIT TO SONGS</button></div></div>
+<script src="install.js?v=0.6" data-name="Nix the Cat" data-gate="__NIX.state=title" data-bottom="44px"></script>
+<script src="music/songs.js?v=0.6"></script>
+<script src="game.js?v=0.6"></script>
+</body></html>
