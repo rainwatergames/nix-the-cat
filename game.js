@@ -1,6 +1,6 @@
 /*! NIX THE CAT v0.3 — © 2026 Rainwater Games (Jeff Rainwater). All rights reserved. */
 (function(){'use strict';
-const VERSION='0.6';
+const VERSION='0.6.1';
 const Q=new URLSearchParams(location.search),BOT=Q.has('bot'),ALLUNL=Q.get('unlock')==='all';
 const $=id=>document.getElementById(id);
 const cv=$('c');let g=cv.getContext('2d');
