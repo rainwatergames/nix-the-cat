@@ -8,3 +8,4 @@ shots/
 node_modules/
 .flypod*
 .DS_Store
+tools/
